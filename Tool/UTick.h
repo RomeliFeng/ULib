@@ -21,6 +21,10 @@ public:
 	static inline void Wait(uint64_t s) {
 		mWait(s * 1000);
 	}
+	static inline void Tick(uint16_t t) {
+		while (t--)
+			;
+	}
 	static uint64_t Millis();
 	static uint64_t Micros();
 	static void IRQ();
