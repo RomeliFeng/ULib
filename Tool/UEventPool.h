@@ -12,8 +12,6 @@
 #include <queue>
 #include <UMisc.h>
 
-using std::queue;
-
 class UEventPool {
 public:
 	~UEventPool();
@@ -21,7 +19,7 @@ public:
 	void Insert(voidFun event);
 	void Clear();
 private:
-	queue<voidFun> _queue;
+	std::queue<voidFun> _queue;
 };
 
 #endif /* UEVENTPOOL_H_ */

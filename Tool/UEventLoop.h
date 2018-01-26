@@ -13,8 +13,6 @@
 #include <UMisc.h>
 #include <list>
 
-using std::list;
-
 class UEventLoop {
 public:
 	struct Unit_Typedef {
@@ -34,7 +32,7 @@ public:
 		uint64_t OverTime;
 	};
 
-	typedef list<Unit_Typedef> EventList;
+	typedef std::list<Unit_Typedef> EventList;
 
 	virtual ~UEventLoop();
 
