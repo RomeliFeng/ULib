@@ -7,10 +7,9 @@
 
 #include <Tool/UPID.h>
 
-UPID::UPID(float kp, float ki, float kd, float interval,
-		Dir_Typedef dir,
-		Param_Typedef* pidParam, Mode_Typedef mode) {
-	PIDParam = pidParam;
+UPID::UPID(float kp, float ki, float kd, float interval, Dir_Typedef dir,
+		Param_Typedef &pidParam, Mode_Typedef mode) :
+		PIDParam(pidParam) {
 	Interval = interval;
 	Dir = dir;
 	SetTunings(kp, ki, kd);
@@ -53,10 +52,10 @@ void UPID::SetLimits(float min, float max) {
 	} else if (iTerm < Min) {
 		iTerm = Min;
 	}
-	if (PIDParam->Output > Max) {
-		PIDParam->Output = Max;
-	} else if (PIDParam->Output < Min) {
-		PIDParam->Output = Min;
+	if (PIDParam.Output > Max) {
+		PIDParam.Output = Max;
+	} else if (PIDParam.Output < Min) {
+		PIDParam.Output = Min;
 	}
 }
 
@@ -70,7 +69,7 @@ void UPID::SetDir(Dir_Typedef dir) {
 }
 
 void UPID::Compute() {
-	pError = PIDParam->SetPoint - PIDParam->Input;			//Compute pError
+	pError = PIDParam.SetPoint - PIDParam.Input;			//Compute pError
 
 	iTerm += Ki * pError;						//Compute iTerm
 	if (iTerm > Max) {	//Limit iTerm
@@ -79,23 +78,23 @@ void UPID::Compute() {
 		iTerm = Min;
 	}
 
-	Last = PIDParam->Input;									//Get last pError
+	Last = PIDParam.Input;									//Get last pError
 	if (Mode == Mode_Diff) {
-		PIDParam->Output = Kp * pError + iTerm - dTerm + PIDParam->Output;
+		PIDParam.Output = Kp * pError + iTerm - dTerm + PIDParam.Output;
 	} else {
-		PIDParam->Output = Kp * pError + iTerm - dTerm;
+		PIDParam.Output = Kp * pError + iTerm - dTerm;
 	}
 
-	if (PIDParam->Output > Max) { //Limit Output
-		PIDParam->Output = Max;
-	} else if (PIDParam->Output < Min) {
-		PIDParam->Output = Min;
+	if (PIDParam.Output > Max) { //Limit Output
+		PIDParam.Output = Max;
+	} else if (PIDParam.Output < Min) {
+		PIDParam.Output = Min;
 	}
-	dTerm = Kd * (PIDParam->Input - Last);			//Compute DTerm
+	dTerm = Kd * (PIDParam.Input - Last);			//Compute DTerm
 }
 
 void UPID::Clear() {
-	PIDParam->Output = 0;
+	PIDParam.Output = 0;
 	iTerm = 0;
 }
 

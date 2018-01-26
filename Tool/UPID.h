@@ -25,7 +25,7 @@ public:
 	};
 
 	UPID(float kp, float ki, float kd, float interval, Dir_Typedef dir,
-			Param_Typedef *UPIDParam, Mode_Typedef mode);
+			Param_Typedef &UPIDParam, Mode_Typedef mode);
 	void SetTunings(float kp, float ki, float kd);
 	void SetInterval(float interval);
 	void SetLimits(float min, float max);
@@ -34,7 +34,7 @@ public:
 	void Clear();
 
 private:
-	Param_Typedef *PIDParam;
+	Param_Typedef &PIDParam;
 	Mode_Typedef Mode;
 	Dir_Typedef Dir;
 	float Kp;
